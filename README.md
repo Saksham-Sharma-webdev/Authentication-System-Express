@@ -26,28 +26,6 @@ A comprehensive backend authentication system demonstrating real-world user auth
 | **Nodemailer**            | Email verification & password reset |
 | **Postman**               | API testing                         |
 
----
-
-## 📁 Project Structure
-
-```
-├── controllers/
-│   └── user.controller.js          # Business logic for user operations
-├── middlewares/
-│   └── auth.middleware.js          # JWT verification middleware
-├── model/
-│   └── User.model.js               # MongoDB user schema
-├── routes/
-│   └── user.routes.js              # API route definitions
-├── utils/
-│   ├── db.js                       # Database connection
-│   ├── email__template.js          # Email HTML templates
-│   ├── validation.js               # Input validation logic
-│   └── verify.email.js             # Email sending logic
-├── index.js                        # Server entry point
-├── package.json                    # Dependencies
-└── README.md                       # This file
-```
 
 ---
 
