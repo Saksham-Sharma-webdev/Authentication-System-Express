@@ -23,7 +23,7 @@ const registerUser = async (req, res) => {
   // set the verificationtoken expiry
   // create user with its detail
   // send the verificationToken throuh email
-  
+
   try {
     console.log("Registration started...");
     const { name, email, password } = req.body;
@@ -84,7 +84,6 @@ const registerUser = async (req, res) => {
           message: "Verification email failed.",
         });
       }
-
     } catch (err) {
       console.log(
         "User registered successfully. But verification email failed",
@@ -342,32 +341,32 @@ const loginUser = async (req, res) => {
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET_KEY, {
       expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN,
     });
-    if(!accessToken){
-      console.log("accessToken not created successfully")
+    if (!accessToken) {
+      console.log("accessToken not created successfully");
       return res.status(400).json({
         success: false,
-        message: "Token creation failed."
-      })
+        message: "Token creation failed.",
+      });
     }
 
     const refreshToken = jwt.sign(
       { id: user._id },
       process.env.REFRESH_TOKEN_SECRET_KEY,
       {
-        expiresIn: process.env.REFRESH_TOKEN_EXPIRESIN, // '120'-> ms, 120-> s, '2m', '5s', '1h', '1d' 
+        expiresIn: process.env.REFRESH_TOKEN_EXPIRESIN, // '120'-> ms, 120-> s, '2m', '5s', '1h', '1d'
       },
     );
-    if(!refreshToken){
-      console.log("refreshToken not created successfully")
+    if (!refreshToken) {
+      console.log("refreshToken not created successfully");
       return res.status(400).json({
         success: false,
-        message: "Token creation failed."
-      })
+        message: "Token creation failed.",
+      });
     }
 
-    user.refreshToken = refreshToken
-    await user.save()
-    console.log("Refresh token saved in db")
+    user.refreshToken = refreshToken;
+    await user.save();
+    console.log("Refresh token saved in db");
 
     const cookieOption1 = {
       httpOnly: true,
@@ -406,12 +405,12 @@ const getMe = async (req, res) => {
 
   try {
     const decoded = req.user;
-    if(!decoded){
-      console.log("decoded data not found by getMe")
+    if (!decoded) {
+      console.log("decoded data not found by getMe");
       return res.status(400).json({
         success: false,
-        message: "User data not found."
-      })
+        message: "User data not found.",
+      });
     }
 
     const user = await User.findById(decoded.id).select("-password");
@@ -436,7 +435,7 @@ const getMe = async (req, res) => {
       data,
     });
   } catch (err) {
-    console.log("Internal server Error on getMe")
+    console.log("Internal server Error on getMe");
     return res.status(500).json({
       success: false,
       message: "Internal Server Errror",
@@ -476,13 +475,12 @@ const logoutUser = async (req, res) => {
 
     console.log("Cookies cleared successfully.");
 
-    console.log("User logged out successfully.")
+    console.log("User logged out successfully.");
     return res.status(200).json({
       success: true,
       message: "User logged out successfully.",
     });
-  } 
-  catch (err) {
+  } catch (err) {
     console.log("Error in logging out user.");
     return res.status(500).json({
       success: false,

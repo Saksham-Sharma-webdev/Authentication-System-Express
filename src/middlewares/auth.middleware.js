@@ -1,12 +1,12 @@
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-import User from "../model/User.model.js";
+import User from "../src/model/User.model.js";
 
 dotenv.config();
 
 const isLoggedIn = async (req, res, next) => {
   try {
-    console.log("User logIn started...")
+    console.log("User logIn started...");
     // take accesstoken and refreshtoken from req.cookies
 
     // if both not present say user to login again
@@ -79,7 +79,7 @@ const isLoggedIn = async (req, res, next) => {
           expiresIn: process.env.ACCESS_TOKEN_EXPIRESIN,
         },
       );
-      
+
       if (!newAccessToken) {
         console.log("newAccessToken not created successfully");
         return res.status(400).json({
@@ -93,7 +93,7 @@ const isLoggedIn = async (req, res, next) => {
         { id: user._id },
         process.env.REFRESH_TOKEN_SECRET_KEY,
         {
-          expiresIn: process.env.REFRESH_TOKEN_EXPIRESIN, 
+          expiresIn: process.env.REFRESH_TOKEN_EXPIRESIN,
         },
       );
       if (!newRefreshToken) {
@@ -135,10 +135,7 @@ const isLoggedIn = async (req, res, next) => {
 
       req.user = data;
       console.log("User logged in successfully 2.");
-    } 
-    
-    
-    else {
+    } else {
       const { accessToken } = req.cookies;
 
       console.log("3. access token found");
